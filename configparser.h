@@ -63,6 +63,35 @@ const char* get_value(config_t* config, const char* key)
     return NULL;
 }
 
+static void remove_spaces(pair_t* pairs, int size)
+{
+    char *temp_key, *temp_value;
+    for (int i = 0; i < size; i++) {
+        char* key = pairs[i].key;
+        char* value = pairs[i].value;
+
+        temp_key = key;
+        temp_value = value;
+
+        while (*key == ' ') key++;
+        while (*value == ' ') value++;
+
+        char* end;
+        end = key + strlen(key) - 1;
+        while (end > key && *end == ' ') end--;
+        *(end + 1) = '\0';
+
+        end = value + strlen(value) - 1;
+        while (end > value && *end == ' ') end--;
+        *(end + 1) = '\0';
+
+        pairs[i].key = strdup(key);
+        pairs[i].value = strdup(value);
+        free(temp_key);
+        free(temp_value);
+    }
+}
+
 void read_config_file(config_t* config, const char* filename)
 {
     FILE* file = fopen(filename, "r");
@@ -82,6 +111,7 @@ void read_config_file(config_t* config, const char* filename)
         }
     }
     fclose(file);
+    remove_spaces(config->pairs, config->size);
 }
 
 pair_t *next_pair(config_t *config)

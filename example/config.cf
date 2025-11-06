@@ -1,6 +1,6 @@
 # Configuration file for testing
 
-DATABBASE_HOST=localhost
+DATABBASE_HOST = aa
 DATABASE_PORT=5432
 ADMIN_USER=admin
 ADMIN_PASSWORD=secret

@@ -10,7 +10,7 @@ int main() {
     {
         printf("Key: %s, Value: %s\n", pair->key, pair->value);
     }
-
     free_config(config);
+    remove_spaces(NULL, 0);
     return 0;
 }
